@@ -9,7 +9,6 @@ const ExpensesFilter = ({ setSelectedYear }) => {
         <label>Filter by year</label>
         <select
           onChange={(event) => {
-            console.log(event.target.value);
             setSelectedYear(event.target.value);
           }}
         >

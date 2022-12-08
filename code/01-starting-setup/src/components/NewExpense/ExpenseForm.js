@@ -13,6 +13,7 @@ export const ExpenseForm = (props) => {
     props.setExpenses((prevState) => {
       return [...prevState, { ...formItems, id: Math.random() }];
     });
+    toggleExpandedState();
     event.preventDefault();
   };
 
@@ -41,41 +42,60 @@ export const ExpenseForm = (props) => {
       });
   };
 
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpandedState = () => {
+    setExpanded((prevState) => {
+      return !prevState;
+    });
+  };
+
   return (
-    <form onSubmit={onFormSubmission}>
-      <div className="new-expense__controls">
-        <div className="new-expense__control">
-          <label>Title</label>
-          <input
-            type="text"
-            onChange={onInputValueChangeHandler}
-            id="titleInput"
-          />
+    <div>
+      {!expanded && (
+        <div className="new-expense__controls">
+          <div className="new-expense__actions">
+            <button onClick={toggleExpandedState}>Add new expense</button>
+          </div>
         </div>
-        <div className="new-expense__control">
-          <label>Amount</label>
-          <input
-            type="number"
-            min={0.01}
-            step={0.01}
-            onChange={onInputValueChangeHandler}
-            id="amountInput"
-          />
-        </div>
-        <div className="new-expense__control">
-          <label>Date</label>
-          <input
-            type="date"
-            min="2022-01-01"
-            max="2022-12-31"
-            onChange={onInputValueChangeHandler}
-            id="dateInput"
-          />
-        </div>
-      </div>
-      <div className="new-expense__actions">
-        <button type="submit">Add expense</button>
-      </div>
-    </form>
+      )}
+      {expanded && (
+        <form onSubmit={onFormSubmission}>
+          <div className="new-expense__controls">
+            <div className="new-expense__control">
+              <label>Title</label>
+              <input
+                type="text"
+                onChange={onInputValueChangeHandler}
+                id="titleInput"
+              />
+            </div>
+            <div className="new-expense__control">
+              <label>Amount</label>
+              <input
+                type="number"
+                min={0.01}
+                step={0.01}
+                onChange={onInputValueChangeHandler}
+                id="amountInput"
+              />
+            </div>
+            <div className="new-expense__control">
+              <label>Date</label>
+              <input
+                type="date"
+                min="2022-01-01"
+                max="2022-12-31"
+                onChange={onInputValueChangeHandler}
+                id="dateInput"
+              />
+            </div>
+          </div>
+          <div className="new-expense__actions">
+            <button type="submit">Add expense</button>
+          </div>
+        </form>
+      )}
+    </div>
   );
 };
